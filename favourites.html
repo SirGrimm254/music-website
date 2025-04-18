@@ -1,0 +1,353 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musicoo</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  </head>  
+  <body>
+    <header>
+      <div class="title">
+        <div class="heading" onclick="window.location.href='index.html'">
+          <img class="logo-image" src="images/logo.png" alt="Logo">
+          <h1>Musicoo</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href='index.html'>Home</a></li>
+            <li>
+            <select id="category-select">
+              <option value="" disabled selected hidden>Genres</option>
+              <option value="reggae">Reggae</option>
+              <option value="trap-hiphop">Trap/Hiphop</option>
+              <option value="rnb-blues">Rnb & Blues</option>
+              <option value="dancehall">Dancehall</option>
+              <option value="bongo">Bongo</option>
+              <option value="gospel">Gospel</option>
+            </select>
+            </li>
+            <li><a href=''>Artists</a></li>
+            <li><a href=''>Contact Us</a></li>
+          </ul>
+        </nav>
+      </div>
+    <section class='search-buttons'>
+      <div class='search'>
+        <input style="width: 500px;" type='text' />
+        <button class='search-button'>Search</button>
+      </div>
+      <div class='account' id="auth-buttons">
+        <button class="logBtn">Log In</button>
+
+        <!-- Login Popup Form -->
+        <div id="login-popup" class="popup-overlay hidden">
+          <form id="login-form">
+            <h1>Log In</h1>
+            <label for="login-username">Username:</label>
+            <input type="text" id="login-username" name="username" required>
+
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="password" required>
+
+            <button type="submit">Log In</button>
+            <button type="button" id="login-cancel-button">Cancel</button>
+          </form>
+        </div>
+
+        <!-- Sign Up Button -->
+        <button class="signBtn">Sign Up</button>
+
+        <!-- Popup Container -->
+        <div id="signup-popup" class="popup-overlay hidden">
+          <div class="popup-content">
+            <form id="signup-form">
+              <h1>Sign Up</h1>
+              <div>
+                <label for="username">Username: </label>
+                <input type="text" id="username" name="username" required>
+                <label for="email">Email: </label>
+                <input type="email" id="email" name="email" required>
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password" required>
+                <label for="confirm-password">Confirm Password: </label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+              </div>
+              <div class="popup-buttons">
+                <button type="submit">Sign Up</button>
+                <button type="button" id="cancel-button">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="user-profile">
+      <div class="profile-container">
+        <div class="profile-image-wrapper">
+          <img id="profile-img" src="default-avatar.png" alt="Profile Image">
+          <input type="file" id="upload-img" accept="image/*" hidden>
+          <button class="upload-btn" onclick="document.getElementById('upload-img').click()">Upload Image</button>
+        </div>
+        <div class="profile-info">
+          <h2 id="display-username">Username</h2>
+        </div>
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+        </div>          
+        <button class="fav-btn">Favourites</button>
+      </div>
+    </section>
+    <main class="main">
+      <section>
+        <h2>Favourite Songs</h2>
+        <div id="favourite-songs-container">
+          <ol id="favourite-song-list">
+            <!-- Songs will be injected here -->
+          </ol>
+        </div>
+      </section>
+    </main>
+    <section class="original-audio-section" id="original-audio-section">
+      <div class="audio-player">
+        <div class="audio-thumbnail">
+          <img id="audio-thumbnail-original" src="" width="80" height="80">
+        </div>
+        <div class="audi-details">
+          <p id="audio-title" class="audio-title">Now Playing</p>
+          <div class="progress-container">
+            <input id="progress-bar" type="range" value="0" step="1" min="0" max="100">
+            <span id="audio-duration">0:00 / 0:00</span>
+          </div>
+        </div>
+        <div class="audio-controls-top">
+          <button id="loop-button" onclick="toggleLoop()" class="loop-active">
+            🔁 <span id="loop-mode-label"></span>
+          </button>
+        </div>
+        <div class="audio-controls-main">
+          <button onclick="handlePrevFavourites()">⏮️</button>
+          <button id="play-button-original" onclick="togglePlay()">▶️</button>
+          <button onclick="handleNextFavourites()">⏭️</button>
+        </div>
+        <div class="audio-controls-top">
+          <button id="shuffle-button" onclick="toggleShuffle()" class="shuffle-active">
+            🔀
+          </button>
+        </div>
+        <div class="volume-control">
+          <button id="volume-icon" onclick="toggleMute()">
+            <i class="fas fa-volume-up"></i>
+          </button>
+          <input id="volume-bar" type="range" min="0" max="1" step="0.01" value="1">
+        </div>
+        <button class="like">🤍</button>
+      </div>
+    </section>
+    <section class="audio-section hidden" id="audio-section">
+      <div class="audio-player">
+        <div class="audio-thumbnail">
+          <img id="audio-thumbnail-fixed" src="" width="80" height="80">
+        </div>
+        <div class="audi-details">
+          <p id="audio-title" class="audio-title">Now Playing</p>
+          <div class="progress-container">
+            <input id="progress-bar" type="range" value="0" step="1" min="0" max="100">
+            <span id="audio-duration">0:00 / 0:00</span>
+          </div>
+        </div>
+        <div class="audio-controls-top">
+          <button id="loop-button" onclick="toggleLoop()" class="loop-active">
+            🔁 <span id="loop-mode-label"></span>
+          </button>
+        </div>
+        <div class="audio-controls-main">
+          <button onclick="handlePrevFavourites()">⏮️</button>
+          <button id="play-button-original" onclick="togglePlay()">▶️</button>
+          <button onclick="handleNextFavourites()">⏭️</button>
+        </div>
+        <div class="audio-controls-top">
+          <button id="shuffle-button" onclick="toggleShuffle()" class="shuffle-active">
+            🔀
+          </button>
+        </div>
+        <div class="volume-control">
+          <button id="volume-icon" onclick="toggleMute()">
+            <i class="fas fa-volume-up"></i>
+          </button>
+          <input id="volume-bar" type="range" min="0" max="1" step="0.01" value="1">
+        </div>
+        <button class="like">🤍</button>
+      </div>
+    </section>
+    </header>
+    <audio id="audio-player-fav" preload="metadata"></audio>
+    <div id="message-box" class="hidden">
+      <p id="message-text"></p>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+        const listContainer = document.getElementById('favourite-song-list');
+        const audioPlayer = document.getElementById('audio-player'); // Get the audio player instance
+        let currentIndex = 0;
+        window.songIds = []; // Make sure this is window.songIds
+        window.songs = {};   // Make sure this is window.songs
+        window.repeatAllEnabled = false;
+    
+        if (!loggedInUser) {
+          listContainer.innerHTML = "<li>Please log in to see your favourites.</li>";
+          return;
+        }
+    
+        const key = `favourites_${loggedInUser.username}`;
+        const favourites = JSON.parse(localStorage.getItem(key)) || [];
+    
+        if (favourites.length === 0) {
+          listContainer.innerHTML = "<li>No favourite songs yet.</li>";
+          return;
+        }
+    
+        window.songIds = favourites.map(song => song.id);
+        favourites.forEach(song => {
+          window.songs[song.id] = {
+            title: song.name,
+            genre: song.genre,
+            url: song.url,
+            songImage: song.imgSrc,
+            artistImage: song.artistImg || "default-artist.jpg",
+          };
+    
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <a href="#" data-id="${song.id}">
+              <div class="description">
+                <div class="song-title">
+                  <img class="thumbnail-image" src="${song.imgSrc}">
+                  <div class="names">
+                    <p class="song-name">${song.name}</p>
+                    <p class="genre">${song.genre}</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          `;
+          listContainer.appendChild(li);
+        });
+    
+        // Attach event listeners after elements are added
+        document.querySelectorAll('#favourite-song-list a').forEach(link => {
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const id = this.getAttribute('data-id');
+            currentIndex = window.songIds.indexOf(id); // Update currentIndex on click
+            selectSongById(id);
+          });
+        });
+    
+        // Function to toggle repeat-all flag
+        window.toggleRepeatAll = function () {
+          window.repeatAllEnabled = !window.repeatAllEnabled;
+          alert("Repeat All: " + (window.repeatAllEnabled ? "ON" : "OFF"));
+        }
+    
+        // Previous button logic
+        window.handlePrevFavourites = function () {
+          if (!window.songIds || window.songIds.length === 0) return;
+    
+          if (currentIndex <= 0) {
+            if (window.repeatAllEnabled) {
+              currentIndex = window.songIds.length - 1;
+            } else {
+              return;
+            }
+          } else {
+            currentIndex--;
+          }
+          selectSongById(window.songIds[currentIndex]);
+        }
+    
+        // Next button logic
+        window.handleNextFavourites = function () {
+          if (!window.songIds || window.songIds.length === 0) return;
+    
+          if (currentIndex >= window.songIds.length - 1) {
+            if (window.repeatAllEnabled) {
+              currentIndex = 0;
+            } else {
+              return;
+            }
+          } else {
+            currentIndex++;
+          }
+          selectSongById(window.songIds[currentIndex]);
+        }
+    
+        // Handle song end to play next in favourites
+        audio.addEventListener('ended', () => {
+          setTimeout(() => {
+            if (!window.songIds || window.songIds.length === 0) return;
+
+            // Reached last song
+            if (currentIndex >= window.songIds.length - 1) {
+              if (window.repeatAllEnabled) {
+                currentIndex = 0;
+                selectSongById(window.songIds[currentIndex]);
+              } else {
+                return; // Stop if repeat is off
+              }
+            } else {
+              currentIndex++;
+              selectSongById(window.songIds[currentIndex]);
+            }
+          }, 200);
+        });
+    
+        // ✅ Define missing globals
+        window.originalAudioSection = document.getElementById('original-audio-section');
+        window.fixedAudioSection = document.getElementById('audio-section');
+        window.isPlaying = false;
+        window.songSelected = false;
+      });
+    </script>      
+    <script src="script.js"></script>           
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+      const displayUsername = document.getElementById("display-username");
+      const profileImg = document.getElementById("profile-img");
+      const authButtons = document.getElementById("auth-buttons");
+    
+      if (!user) {
+        alert("You must log in to view favourites.");
+        window.location.href = "index.html";
+        return;
+      }
+    
+      // Show username
+      if (displayUsername) displayUsername.textContent = user.username;
+    
+      // Load stored profile image
+      const storedImage = localStorage.getItem(`profileImage-${user.username}`);
+      if (storedImage && profileImg) {
+        profileImg.src = storedImage;
+      }
+    
+      // Add logout button
+      if (authButtons) {
+        authButtons.innerHTML = `<button onclick="logout()" class="logBtn">Log Out</button>`;
+      }
+    });
+    
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      location.reload();
+    }
+  </script>  
+</html>

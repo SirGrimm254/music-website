@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musicoo</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="title">
+      <div class="heading" onclick="window.location.href='index.html'">
+        <img class="logo-image" src="images/logo.png" alt="Logo">
+        <h1>Musicoo</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href='index.html'>Home</a></li>
+          <li>
+            <select id="category-select">
+              <option value="" disabled selected hidden>Genres</option>
+              <option value="reggae">Reggae</option>
+              <option value="trap-hiphop">Trap/Hiphop</option>
+              <option value="rnb-blues">Rnb & Blues</option>
+              <option value="dancehall">Dancehall</option>
+              <option value="bongo">Bongo</option>
+              <option value="gospel">Gospel</option>
+            </select>
+          </li>
+          <li><a href=''>Artists</a></li>
+          <li><a href=''>Contact Us</a></li>
+        </ul>
+      </nav>
+    </div>
+    <section class='search-buttons'>
+      <div class='search'>
+        <input style="width: 500px;" type='text' />
+        <button class='search-button'>Search</button>
+      </div>
+      <div class='account' id="auth-buttons">
+        <button class="logBtn">Log In</button>
+
+        <div id="login-popup" class="popup-overlay hidden">
+          <form id="login-form">
+            <h1>Log In</h1>
+            <label for="login-username">Username:</label>
+            <input type="text" id="login-username" name="username" required>
+
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="password" required>
+
+            <button type="submit">Log In</button>
+            <button type="button" id="login-cancel-button">Cancel</button>
+          </form>
+        </div>
+
+        <button class="signBtn">Sign Up</button>
+
+        <div id="signup-popup" class="popup-overlay hidden">
+          <div class="popup-content">
+            <form id="signup-form">
+              <h1>Sign Up</h1>
+              <div>
+                <label for="username">Username: </label>
+                <input type="text" id="username" name="username" required>
+                <label for="email">Email: </label>
+                <input type="email" id="email" name="email" required>
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password" required>
+                <label for="confirm-password">Confirm Password: </label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+              </div>
+              <div class="popup-buttons">
+                <button type="submit">Sign Up</button>
+                <button type="button" id="cancel-button">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="user-profile">
+      <div class="profile-container">
+        <div class="profile-image-wrapper">
+          <img id="profile-img" src="default-avatar.png" alt="Profile Image">
+          <input type="file" id="upload-img" accept="image/*" hidden>
+          <button class="upload-btn" onclick="document.getElementById('upload-img').click()">Upload Image</button>
+        </div>
+        <div class="profile-info">
+          <h2 id="display-username">Username</h2>
+        </div>
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://github.com" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+        <button class="fav-btn" onclick="loadFavourites()">Favourites</button>
+      </div>
+    </section>
+    <main class="main">
+      <section>
+        <h2>Popular Songs</h2>
+        <div>
+          <ol>
+            <li>
+              <a href='#' onclick="selectSongById('song1'); return false;">
+                <div class="description">
+                  <div class="song-title">
+                    <img class="thumbnail-image" src="images/drone.jpeg">
+                    <div class="names">
+                      <p class="song-name">Vybz Kartel - Drone Dem(Raw)</p>
+                      <p class="genre">Dancehall</p>
+                    </div>
+                  </div>
+                  <button class="like" onclick="addToFavourites('song1', 'Vybz Kartel - Drone Dem(Raw)', 'Dancehall', 'images/drone.jpeg', 'songs/Dronedem.mp3')">🤍</button>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href='#' onclick="selectSongById('song2'); return false;">
+                <div class="description">
+                  <div class="song-title">
+                    <img class="thumbnail-image" src="images/euphoria.jpeg">
+                    <div class="names">
+                      <p class="song-name">Kendrick Lamar - Euphoria</p>
+                      <p class="genre">Trap/Hiphop</p>
+                    </div>
+                  </div>
+                  <button class="like" onclick="addToFavourites('song2', 'Kendrick Lamar - Euphoria', 'Trap/Hiphop', 'images/euphoria.jpeg', 'songs/Euphoria.mp3' )">🤍</button>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href='#' onclick="selectSongById('song3'); return false;">
+                <div class="description">
+                  <div class="song-title">
+                    <img class="thumbnail-image" src="images/oneofone.jpg">
+                    <div class="names">
+                      <p class="song-name">Gunna - One of Wun</p>
+                      <p class="genre">Trap/Hiphop</p>
+                    </div>
+                  </div>
+                  <button class="like" onclick="addToFavourites('song3', 'Gunna - One of Wun', 'Trap/Hiphop', 'images/oneofone.jpeg', 'songs/Oneofone.mp3' )">🤍</button>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="selectSongById('song4'); return false;">
+                <div class="description">
+                  <div class="song-title">
+                    <img class="thumbnail-image" src="images/butterflyeffects.jpg">
+                    <div class="names">
+                      <p class="song-name">Travis Scott - Butterfly Effects</p>
+                      <p class="genre">Trap/Hiphop</p>
+                    </div>
+                  </div>
+                  <button class="like" onclick="addToFavourites('song4', 'Travis Scott - Butterfly Effects', 'Trap/Hiphop', 'images/butterflyeffects.jpg', 'songs/ButterflyEffects.mp3' )">🤍</button>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="selectSongById('song5'); return false;">
+                <div class="description">
+                  <div class="song-title">
+                    <img class="thumbnail-image" src="images/dragdembat.jpg">
+                    <div class="names">
+                      <p class="song-name">Vybz Kartel - Drag Dem Bat</p>
+                      <p class="genre">Dancehall</p>
+                    </div>
+                  </div>
+                  <button class="like" onclick="addToFavourites('song5', 'Vybz Kartel - Drag Dem Bat', 'Dancehall', 'images/dragdembat.jpg', 'songs/dragdembat.mp3' )">🤍</button>
+                </div>
+              </a>
+            </li>
+          </ol>
+        </div>
+      </section>
+      <section class="descript">
+        <h3>Artist Bio</h3>
+        <div class="descript-window">
+          <ul class="descript-ul">
+            <li>
+              <img id="artist-image" src="images/vybzkartel.jpeg" width="100" height="100">
+              <p id="genre-info">Genre: Dancehall</p>
+              <p id="description-text">Description: Dancehall music from Vybz Kartel.</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+    <section class="original-audio-section" id="original-audio-section">
+      <div class="audio-player">
+        <div class="audio-thumbnail">
+          <img id="audio-thumbnail-original" src="" width="80" height="80">
+        </div>
+        <div class="audi-details">
+          <p id="audio-title" class="audio-title">Now Playing</p>
+          <div class="progress-container">
+            <input id="progress-bar" type="range" value="0" step="1" min="0" max="100">
+            <span id="audio-duration">0:00 / 0:00</span>
+          </div>
+        </div>
+        <div class="audio-controls-top">
+          <button id="loop-button" onclick="toggleLoop()" class="loop-active">
+            🔁 <span id="loop-mode-label"></span>
+          </button>
+        </div>
+        <div class="audio-controls-main">
+          <button onclick="handlePrev()">⏮️</button>
+          <button id="play-button-original" onclick="togglePlay()">▶️</button>
+          <button onclick="handleNext()">⏭️</button>
+        </div>
+        <div class="audio-controls-top">
+          <button id="shuffle-button" onclick="toggleShuffle()" class="shuffle-active">
+            🔀
+          </button>
+        </div>
+        <div class="volume-control">
+          <button id="volume-icon" onclick="toggleMute()">
+            <i class="fas fa-volume-up"></i>
+          </button>
+          <input id="volume-bar" type="range" min="0" max="1" step="0.01" value="1">
+        </div>
+        <button class="like">🤍</button>
+      </div>
+    </section>
+  </header>
+  <div id="message-box" class="hidden">
+    <p id="message-text"></p>
+  </div>
+</body>
+<section class="audio-section hidden" id="audio-section">
+  <div class="audio-player">
+    <div class="audio-thumbnail">
+      <img id="audio-thumbnail-fixed" src="" width="80" height="80">
+    </div>
+    <div class="audi-details">
+      <p id="audio-title" class="audio-title">Now Playing</p>
+      <div class="progress-container">
+        <input id="progress-bar" type="range" value="0" step="1" min="0" max="100">
+        <span id="audio-duration">0:00 / 0:00</span>
+      </div>
+    </div>
+    <div class="audio-controls-top">
+      <button id="loop-button" onclick="toggleLoop()" class="loop-active">
+        🔁 <span id="loop-mode-label"></span>
+      </button>
+    </div>
+    <div class="audio-controls-main">
+      <button onclick="handlePrev()">⏮️</button>
+      <button id="play-button-fixed" onclick="togglePlay()">▶️</button>
+      <button onclick="handleNext()">⏭️</button>
+    </div>
+    <div class="audio-controls-top">
+      <button id="shuffle-button" onclick="toggleShuffle()" class="shuffle-active">
+        🔀
+      </button>
+    </div>
+    <div class="volume-control">
+      <button id="volume-icon" onclick="toggleMute()">
+        <i class="fas fa-volume-up"></i>
+      </button>
+      <input id="volume-bar" type="range" min="0" max="1" step="0.01" value="1">
+    </div>
+    <button class="like">🤍</button>
+  </div>
+</section>
+<script src="script.js"></script>
+</html>
